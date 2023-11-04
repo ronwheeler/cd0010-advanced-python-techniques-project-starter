@@ -34,7 +34,7 @@ class NearEarthObject:
     """
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation, name=None, diameter=float('nan'), hazardous=False):
+    def __init__(self, designation, name, diameter=float('nan'), hazardous=False):
         """Create a new `NearEarthObject`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -97,7 +97,7 @@ class CloseApproach:
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
     
-    def __init__(self, _designation, time, distance = float('nan'), velocity = float('nan')):
+    def __init__(self, designation, time, distance = float('nan'), velocity = float('nan')):
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -106,7 +106,7 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = _designation
+        self._designation = designation
         self.time = cd_to_datetime(time)  # TODO: Use the cd_to_datetime function for this attribute.
         self.distance = distance
         self.velocity = velocity

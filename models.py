@@ -18,6 +18,7 @@ quirks of the data set, such as missing names and unknown diameters.
 You'll edit this file in Task 1.
 """
 from helpers import cd_to_datetime, datetime_to_str
+import math
 
 
 class NearEarthObject:
@@ -44,11 +45,30 @@ class NearEarthObject:
         # You should coerce these values to their appropriate data type and
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
-        self.designation = designation
-        self.name = name
-        self.diameter = diameter
-        self.hazardous = hazardous
-
+        
+        if designation == '':
+            self.designation = None
+        else:
+            self.designation = designation
+        
+        if name == '':
+            self.name = None
+        else:
+            self.name = name
+        if not diameter:
+            self.diameter = float('nan')
+        else:
+            self.diameter = diameter
+        
+        if not hazardous:
+            self.hazardous = False
+        else:
+            if hazardous == 'N':
+                self.hazardous = False
+            else:
+                self.hazardous = True
+        
+        
         # Create an empty initial collection of linked approaches.
         self.approaches = []
 
@@ -108,9 +128,11 @@ class CloseApproach:
         # The `cd_to_datetime` function will be useful.
         self._designation = designation
         self.time = cd_to_datetime(time)  # TODO: Use the cd_to_datetime function for this attribute.
-        self.distance = distance
-        self.velocity = velocity
-
+        if not math.isnan(distance):
+            self.distance = float(distance)
+        if not math.isnan(velocity):
+            self.velocity = float(velocity)
+        
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
 

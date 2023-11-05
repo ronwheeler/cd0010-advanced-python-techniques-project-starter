@@ -27,18 +27,29 @@ def load_neos(neo_csv_path):
     # TODO: Load NEO data from the given CSV file.
     neo_list = []
     with open(neo_csv_path, 'r') as neo_file:
-        reader = csv.reader(neo_file)
-        next(reader)  # Skip header
-        for row in reader:
+        neo_reader = csv.DictReader(neo_file) # Changed to DictReader...having issues with the csv reader.
+        for row in neo_reader:
+            
+            # need to reset the name and diameter to None at the start of each row. This was throwing me off.
+            name = None
+            diameter = float('nan')
+
+            if (row['diameter'] != '' and row['diameter'] is not None):  
+                diameter = float(row['diameter'])
+            
+            if (row['name'] != '' and row['name'] is not None):  
+                name = (row['name'])
+
             neo = NearEarthObject(
-                designation=row[3],
-                name=row[4],
-                diameter=(row[15]),
-                hazardous=row[7]
+                designation=row['pdes'],
+                name=name,
+                diameter=diameter,
+                hazardous=row['pha']
             )
+
             neo_list.append(neo)
 
-
+        
 
     return neo_list
 
@@ -58,7 +69,7 @@ def load_approaches(cad_json_path):
             designation=item[0],
             time=item[3],
             distance=float(item[4]),
-            velocity=item[7]
+            velocity=float(item[7])
         )
         
         approaches_list.append(ca)
